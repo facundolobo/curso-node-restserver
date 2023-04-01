@@ -1,6 +1,8 @@
 require('dotenv').config();
 const cors = require('cors'); //para cors
 const express = require('express');//para generar un server
+const db = require('../db/connection');
+
 
 class Server{
     constructor(){
@@ -10,11 +12,24 @@ class Server{
         /*definimos path de Rutas*/
         this.usuariosPath = '/api/usuarios';
 
+        //Base de datos
+        this.dbConnection();
+
         //Middlewares
         this.middlewares();
 
         //Rutas de mi aplicacion
         this.routes();
+    }
+
+    //conectar a base de datos
+    async dbConnection(){
+        try {
+            await db.authenticate();
+            console.log('Database online');
+        } catch (error) {
+            throw new Error(error)
+        }
     }
 
     middlewares(){
