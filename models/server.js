@@ -11,6 +11,7 @@ class Server{
         
         /*definimos path de Rutas*/
         this.usuariosPath = '/api/usuarios';
+        this.authPath     = '/api/auth'; //Ruta para logearse
 
         //Base de datos
         this.dbConnection();
@@ -47,12 +48,13 @@ class Server{
     routes(){
           
           //agregar una lista de rutas para una funcionalidad
-          this.app.use( this.usuariosPath , require('../routes/usuarios'));
+          this.app.use( this.authPath ,     require('../routes/auth')); //ruta para logearse
+          this.app.use( this.usuariosPath , require('../routes/usuarios')); //ruta para usuarios
     }
 
     lister(){
         this.app.listen(this.port, () => {
-            console.log('Servidor corriendo en opuerto', this.port );
+            console.log('Servidor corriendo en puerto', this.port );
         });
     }
 }
